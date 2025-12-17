@@ -1,0 +1,107 @@
+<!doctype html> 
+<html lang="cs"> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta name="viewport"> 
+  <title>Pomocník na správu úkolů</title> 
+
+  <link rel="stylesheet" href="css/style.css"> 
+</head>
+
+<body> 
+  <header class="app-header"> 
+    <h1 class="app-title">Pomocník na správu úkolů</h1> 
+
+    <nav class="app-nav"> 
+      <button id="btnSeedDemo" type="button">Načíst demo data</button>
+      <button id="btnReset" type="button">Reset</button> 
+    </nav>
+  </header>
+
+  <main class="app-main"> 
+    <section class="panel panel-left"> 
+      <h2>Úkoly</h2> 
+
+      <div class="filters"> 
+        <label for="filterText">Hledat:</label> 
+        <input id="filterText" type="text" placeholder="název / popis..."> 
+      </div>
+
+      <div id="taskList" class="task-list"> 
+        
+      </div>
+    </section>
+
+    <section class="panel panel-right"> 
+      <h2>Detail</h2> 
+
+      <form id="taskForm" class="task-form"> 
+        <input id="taskId" type="hidden"> <!-- Skryté ID úkolu (prázdné = nový úkol). -->
+
+        <label for="title">Název *</label> <!-- Povinné pole dle datového modelu. -->
+        <input id="title" type="text" required> <!-- required zajistí základní validaci v prohlížeči. -->
+
+        <label for="description">Popis</label> <!-- Nepovinné pole. -->
+        <textarea id="description" rows="3"></textarea> <!-- Víceřádkový text. -->
+
+        <label for="dueDate">Termín (YYYY-MM-DD)</label> <!-- Datový model chce string ve formátu YYYY-MM-DD. -->
+        <input id="dueDate" type="date"> <!-- date input nám ten formát přirozeně hlídá. -->
+
+        <label for="status">Stav</label> <!-- status: todo | in_progress | done. -->
+        <select id="status"> <!-- Výběr jednoho stavu. -->
+          <option value="todo">To do</option> <!-- Hodnota odpovídá modelu. -->
+          <option value="in_progress">In progress</option> <!-- Hodnota odpovídá modelu. -->
+          <option value="done">Done</option> <!-- Hodnota odpovídá modelu. -->
+        </select>
+
+        <label for="priority">Priorita</label> <!-- priority: low | medium | high. -->
+        <select id="priority"> <!-- Výběr priority. -->
+          <option value="low">Low</option> <!-- Hodnota odpovídá modelu. -->
+          <option value="medium" selected>Medium</option> <!-- Defaultně nastavíme medium. -->
+          <option value="high">High</option> <!-- Hodnota odpovídá modelu. -->
+        </select>
+
+        <div class="form-actions"> <!-- Kontejner pro akční tlačítka formuláře. -->
+          <button id="btnSave" type="submit">Uložit</button> <!-- Submit vyvolá handler v app.js. -->
+          <button id="btnNew" type="button">Nový</button> <!-- Vyčistí formulář pro nový úkol. -->
+        </div>
+      </form>
+
+      <section class="notes"> <!-- Sekce pro poznámky k úkolu (notes[]). -->
+        <h3>Poznámky</h3> <!-- Nadpis poznámek. -->
+
+        <div id="notesList" class="notes-list"> <!-- Sem budeme renderovat poznámky vybraného úkolu. -->
+          <!-- UI se doplní dynamicky přes JavaScript. -->
+        </div>
+
+        <form id="noteForm" class="note-form"> <!-- Formulář pro přidání poznámky. -->
+          <label for="noteText">Nová poznámka</label> <!-- Popisek. -->
+          <textarea id="noteText" rows="2"></textarea> <!-- Text poznámky. -->
+          <button id="btnAddNote" type="submit">Přidat poznámku</button> <!-- Odeslání přidá note do notes[]. -->
+        </form>
+      </section>
+
+      <section class="gcal"> <!-- Sekce pro Google Calendar integraci (bez backendu). -->
+        <h3>Google Kalendář</h3> <!-- Nadpis. -->
+
+        <p class="hint">Později doplníme přihlášení a export termínu úkolu do kalendáře.</p> <!-- Informativní text. -->
+
+        <button id="btnGcalConnect" type="button">Připojit Google</button> <!-- Start OAuth (řešení v app.js). -->
+        <button id="btnGcalExport" type="button" disabled>Exportovat vybraný úkol</button> <!-- Aktivujeme až po připojení + vybraném úkolu. -->
+      </section>
+    </section>
+  </main>
+
+  <footer class="app-footer"> <!-- Spodní lišta pro stavové hlášky. -->
+    <div id="toast" class="toast" aria-live="polite"></div> <!-- Jednoduché místo pro zprávy uživateli. -->
+  </footer>
+
+  <!-- jQuery (povoleno – doporučené v zadání; budeme používat i $.ajax) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- Načte jQuery z CDN. -->
+
+ 
+  <script src="js/storage.js"></script> 
+  <script src="js/ui.js"></script> 
+  <script src="js/app.js"></script> 
+</body>
+</html>
